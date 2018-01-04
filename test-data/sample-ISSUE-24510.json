@@ -1,0 +1,248 @@
+{
+  "expand": "names,schema",
+  "startAt": 0,
+  "maxResults": 50,
+  "total": 1,
+  "issues": [
+    {
+      "expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+      "id": "52334",
+      "self": "https://you-live-in-the.matrix/rest/api/2/issue/52334",
+      "key": "ISSUE-24510",
+      "fields": {
+        "fixVersions": [],
+        "resolution": {
+          "self": "https://you-live-in-the.matrix/rest/api/2/resolution/10301",
+          "id": "10301",
+          "description": "This is a masked description",
+          "name": "W.A.D."
+        },
+        "lastViewed": "2017-12-04T11:53:36.683+0000",
+        "priority": {
+          "self": "https://you-live-in-the.matrix/rest/api/2/priority/5",
+          "iconUrl": "https://you-live-in-the.matrix/images/icons/priorities/minor.svg",
+          "name": "Low",
+          "id": "5"
+        },
+        "labels": [],
+        "issuelinks": [],
+        "assignee": {
+          "self": "https://you-live-in-the.matrix/rest/api/2/user?username=masked",
+          "name": "masked",
+          "key": "masked",
+          "emailAddress": "masked@you-live-in-the.matrix",
+          "avatarUrls": {
+            "48x48": "https://you-live-in-the.matrix/secure/useravatar?ownerId=masked&avatarId=12508",
+            "24x24": "https://you-live-in-the.matrix/secure/useravatar?size=small&ownerId=masked&avatarId=12508",
+            "16x16": "https://you-live-in-the.matrix/secure/useravatar?size=xsmall&ownerId=masked&avatarId=12508",
+            "32x32": "https://you-live-in-the.matrix/secure/useravatar?size=medium&ownerId=masked&avatarId=12508"
+          },
+          "displayName": "masked",
+          "active": true,
+          "timeZone": "GMT"
+        },
+        "status": {
+          "self": "https://you-live-in-the.matrix/rest/api/2/status/6",
+          "description": "This is a masked description",
+          "iconUrl": "https://you-live-in-the.matrix/images/icons/statuses/closed.png",
+          "name": "Closed",
+          "id": "6",
+          "statusCategory": {
+            "self": "https://you-live-in-the.matrix/rest/api/2/statuscategory/3",
+            "id": 3,
+            "key": "done",
+            "colorName": "green",
+            "name": "Done"
+          }
+        },
+        "creator": {
+          "self": "https://you-live-in-the.matrix/rest/api/2/user?username=masked",
+          "name": "masked",
+          "key": "masked",
+          "emailAddress": "masked@you-live-in-the.matrix",
+          "avatarUrls": {
+            "48x48": "https://you-live-in-the.matrix/secure/useravatar?ownerId=masked&avatarId=12508",
+            "24x24": "https://you-live-in-the.matrix/secure/useravatar?size=small&ownerId=masked&avatarId=12508",
+            "16x16": "https://you-live-in-the.matrix/secure/useravatar?size=xsmall&ownerId=masked&avatarId=12508",
+            "32x32": "https://you-live-in-the.matrix/secure/useravatar?size=medium&ownerId=masked&avatarId=12508"
+          },
+          "displayName": "masked",
+          "active": true,
+          "timeZone": "GMT"
+        },
+        "subtasks": [],
+        "reporter": {
+          "self": "https://you-live-in-the.matrix/rest/api/2/user?username=masked",
+          "name": "masked",
+          "key": "masked",
+          "emailAddress": "masked@you-live-in-the.matrix",
+          "avatarUrls": {
+            "48x48": "https://you-live-in-the.matrix/secure/useravatar?ownerId=masked&avatarId=12508",
+            "24x24": "https://you-live-in-the.matrix/secure/useravatar?size=small&ownerId=masked&avatarId=12508",
+            "16x16": "https://you-live-in-the.matrix/secure/useravatar?size=xsmall&ownerId=masked&avatarId=12508",
+            "32x32": "https://you-live-in-the.matrix/secure/useravatar?size=medium&ownerId=masked&avatarId=12508"
+          },
+          "displayName": "masked",
+          "active": true,
+          "timeZone": "GMT"
+        },
+        "votes": {
+          "self": "https://you-live-in-the.matrix/rest/api/2/issue/ISSUE-24510/votes",
+          "votes": 0,
+          "hasVoted": false
+        },
+        "issuetype": {
+          "self": "https://you-live-in-the.matrix/rest/api/2/issuetype/1",
+          "id": "1",
+          "description": "This is a masked description",
+          "iconUrl": "https://you-live-in-the.matrix/secure/viewavatar?size=xsmall&avatarId=11007&avatarType=issuetype",
+          "name": "Bug",
+          "subtask": false,
+          "avatarId": 11007
+        },
+        "project": {
+          "self": "https://you-live-in-the.matrix/rest/api/2/project/10002",
+          "id": "10002",
+          "key": "ISSUE",
+          "name": "MATRIX",
+          "avatarUrls": {
+            "48x48": "https://you-live-in-the.matrix/secure/projectavatar?pid=10002&avatarId=11908",
+            "24x24": "https://you-live-in-the.matrix/secure/projectavatar?size=small&pid=10002&avatarId=11908",
+            "16x16": "https://you-live-in-the.matrix/secure/projectavatar?size=xsmall&pid=10002&avatarId=11908",
+            "32x32": "https://you-live-in-the.matrix/secure/projectavatar?size=medium&pid=10002&avatarId=11908"
+          }
+        },
+        "resolutiondate": "2017-12-01T07:58:36.000+0000",
+        "workratio": -1,
+        "watches": {
+          "self": "https://you-live-in-the.matrix/rest/api/2/issue/ISSUE-24510/watchers",
+          "watchCount": 3,
+          "isWatching": false
+        },
+        "created": "2017-11-30T08:17:44.000+0000",
+        "updated": "2017-12-01T07:58:36.000+0000",
+        "description": "This is a masked description",
+        "summary": "This is a masked issue summary",
+        "environment": null
+      },
+      "changelog": {
+        "startAt": 0,
+        "maxResults": 3,
+        "total": 3,
+        "histories": [
+          {
+            "id": "518901",
+            "author": {
+              "self": "https://you-live-in-the.matrix/rest/api/2/user?username=masked",
+              "name": "masked",
+              "key": "masked",
+              "emailAddress": "masked@you-live-in-the.matrix",
+              "avatarUrls": {
+                "48x48": "https://you-live-in-the.matrix/secure/useravatar?ownerId=masked&avatarId=11609",
+                "24x24": "https://you-live-in-the.matrix/secure/useravatar?size=small&ownerId=masked&avatarId=11609",
+                "16x16": "https://you-live-in-the.matrix/secure/useravatar?size=xsmall&ownerId=masked&avatarId=11609",
+                "32x32": "https://you-live-in-the.matrix/secure/useravatar?size=medium&ownerId=masked&avatarId=11609"
+              },
+              "displayName": "masked",
+              "active": true,
+              "timeZone": "GMT"
+            },
+            "created": "2017-11-30T09:34:53.131+0000",
+            "items": [
+              {
+                "field": "Assigned Team",
+                "fieldtype": "custom",
+                "from": "10015",
+                "fromString": "not set",
+                "to": "10010",
+                "toString": "masked"
+              }
+            ]
+          },
+          {
+            "id": "519442",
+            "author": {
+              "self": "https://you-live-in-the.matrix/rest/api/2/user?username=masked",
+              "name": "masked",
+              "key": "masked",
+              "emailAddress": "masked@you-live-in-the.matrix",
+              "avatarUrls": {
+                "48x48": "https://you-live-in-the.matrix/secure/useravatar?ownerId=masked&avatarId=12508",
+                "24x24": "https://you-live-in-the.matrix/secure/useravatar?size=small&ownerId=masked&avatarId=12508",
+                "16x16": "https://you-live-in-the.matrix/secure/useravatar?size=xsmall&ownerId=masked&avatarId=12508",
+                "32x32": "https://you-live-in-the.matrix/secure/useravatar?size=medium&ownerId=masked&avatarId=12508"
+              },
+              "displayName": "masked",
+              "active": true,
+              "timeZone": "GMT"
+            },
+            "created": "2017-12-01T07:56:30.314+0000",
+            "items": [
+              {
+                "field": "assignee",
+                "fieldtype": "jira",
+                "from": "masked",
+                "fromString": "masked",
+                "to": "masked",
+                "toString": "masked"
+              }
+            ]
+          },
+          {
+            "id": "519446",
+            "author": {
+              "self": "https://you-live-in-the.matrix/rest/api/2/user?username=masked",
+              "name": "masked",
+              "key": "masked",
+              "emailAddress": "masked@you-live-in-the.matrix",
+              "avatarUrls": {
+                "48x48": "https://you-live-in-the.matrix/secure/useravatar?ownerId=masked&avatarId=12508",
+                "24x24": "https://you-live-in-the.matrix/secure/useravatar?size=small&ownerId=masked&avatarId=12508",
+                "16x16": "https://you-live-in-the.matrix/secure/useravatar?size=xsmall&ownerId=masked&avatarId=12508",
+                "32x32": "https://you-live-in-the.matrix/secure/useravatar?size=medium&ownerId=masked&avatarId=12508"
+              },
+              "displayName": "masked",
+              "active": true,
+              "timeZone": "GMT"
+            },
+            "created": "2017-12-01T07:58:36.115+0000",
+            "items": [
+              {
+                "field": "resolution",
+                "fieldtype": "jira",
+                "from": null,
+                "fromString": null,
+                "to": "10301",
+                "toString": "W.A.D."
+              },
+              {
+                "field": "Code was commited?",
+                "fieldtype": "custom",
+                "from": "10215",
+                "fromString": "yes",
+                "to": null,
+                "toString": ""
+              },
+              {
+                "field": "status",
+                "fieldtype": "jira",
+                "from": "1",
+                "fromString": "New",
+                "to": "6",
+                "toString": "Closed"
+              },
+              {
+                "field": "Release Date",
+                "fieldtype": "custom",
+                "from": null,
+                "fromString": null,
+                "to": "2017-12-01",
+                "toString": "masked"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
