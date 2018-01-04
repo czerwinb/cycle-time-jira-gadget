@@ -7,28 +7,28 @@ chai.use(chaiArrays);
 chai.use(chaiAlso);
 const expect = chai.expect;
 
-describe('JiraUtil', function () {
-    var JiraUtil = require('./metrics-calculator');
+describe('MetricsCalculator', function () {
+    const MetricsCalculator = require('./metrics-calculator');
 
     describe('#getIssuesIds()', function () {
         it('should return an empty array for null request', function () {
-            var ids = JiraUtil.getIssuesIds(null);
+            var ids = new MetricsCalculator().getIssuesIds(null);
             expect(ids).to.be.array().that.is.ofSize(0);
         });
 
         it('should return an empty array for an empty request', function () {
-            var ids = JiraUtil.getIssuesIds('');
+            var ids = new MetricsCalculator().getIssuesIds('');
             expect(ids).to.be.array().that.is.ofSize(0);
         });
 
         it('should return an empty array for an invalid request', function () {
-            var ids = JiraUtil.getIssuesIds('invalid request');
+            var ids = new MetricsCalculator().getIssuesIds('invalid request');
             expect(ids).to.be.array().that.is.ofSize(0);
         });
 
         it('should return an array of issues ids', function () {
             var response = require('./test-data/sample-3-issues.json')
-            var ids = JiraUtil.getIssuesIds(response);
+            var ids = new MetricsCalculator().getIssuesIds(response);
             expect(ids).to.be.array();
             expect(ids).to.be.ofSize(3);
             expect(ids).to.be.containingAllOf(['ISSUE-23389', 'ISSUE-24177', 'ISSUE-24510']);
@@ -38,7 +38,7 @@ describe('JiraUtil', function () {
     describe('#processResponse()', function () {
         it('ISSUE-123', function () {
             let response = require('./test-data/sample-ISSUE-123.json')
-            let metrics = JiraUtil.processResponse(response);
+            let metrics = new MetricsCalculator().processResponse(response);
 
             expect(metrics)
                 .to.be.an('object')
@@ -60,7 +60,7 @@ describe('JiraUtil', function () {
 
         it('ISSUE-24510', function () {
             let response = require('./test-data/sample-ISSUE-24510.json')
-            let metrics = JiraUtil.processResponse(response);
+            let metrics = new MetricsCalculator().processResponse(response);
 
             expect(metrics)
                 .to.be.an('object')
@@ -82,7 +82,7 @@ describe('JiraUtil', function () {
 
         it('ISSUE-24177', function () {
             let response = require('./test-data/sample-ISSUE-24177.json')
-            let metrics = JiraUtil.processResponse(response);
+            let metrics = new MetricsCalculator().processResponse(response);
 
             expect(metrics)
                 .to.be.an('object')
@@ -104,7 +104,7 @@ describe('JiraUtil', function () {
 
         it('ISSUE-23389', function () {
             let response = require('./test-data/sample-ISSUE-23389.json')
-            let metrics = JiraUtil.processResponse(response);
+            let metrics = new MetricsCalculator().processResponse(response);
 
             expect(metrics)
                 .to.be.an('object')
@@ -127,7 +127,7 @@ describe('JiraUtil', function () {
 
         it('2 issues', function () {
             let response = require('./test-data/sample-2-issues.json')
-            let metrics = JiraUtil.processResponse(response);
+            let metrics = new MetricsCalculator().processResponse(response);
 
             expect(metrics)
                 .to.be.an('object')
@@ -150,7 +150,7 @@ describe('JiraUtil', function () {
 
         it('3 issues', function () {
             let response = require('./test-data/sample-3-issues.json')
-            let metrics = JiraUtil.processResponse(response);
+            let metrics = new MetricsCalculator().processResponse(response);
 
             expect(metrics)
                 .to.be.an('object')
