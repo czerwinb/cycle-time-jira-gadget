@@ -4,63 +4,69 @@ let DateUtils = require('./date-utils');
 
 let MetricsCalculator = (function () {
     function MetricsCalculator() {
+        this.cycleTimes = [];
+        this.leadTimes = [];
     }
 
     MetricsCalculator.prototype.processResponse = function (response) {
-        let cycleTimes = [];
-        let leadTimes = [];
-
-        response.issues.forEach(issue => {
-            let issueLeadTime = 0;
-            let issueCycleTime = 0;
-            let prevTransitionDate = parseDate(issue.fields.created);
-            let cycleStartDate = null;
-
-            issue.changelog.histories.forEach(history => {
-                history.items
-                    .filter(transition => isStatusTransition(transition))
-                    .forEach(transition => {
-                        const transitionDate = parseDate(history.created);
-
-                        // Update Cycle Time
-                        if (isStatusWIP(transition.to) && isNotSet(cycleStartDate)) {
-                            cycleStartDate = transitionDate;
-                        } else if (!isStatusWIP(transition.to) && cycleStartDate) {
-                            let duration = DateUtils.calculateDurationBetween(cycleStartDate, transitionDate);
-                            issueCycleTime += duration.duration.millis;
-                            cycleStartDate = null;
-                        }
-
-                        // Update Lead Time
-                        if (!isStatusDone(transition.from) && isStatusDone(transition.to)) {
-                            let duration = DateUtils.calculateDurationBetween(prevTransitionDate, transitionDate);
-                            issueLeadTime += duration.duration.millis;
-                            prevTransitionDate = null;
-                        } else if ((isStatusDone(transition.from) || isStatusNew(transition.to)) && !prevTransitionDate) {
-                            prevTransitionDate = transitionDate;
-                        }
-                    });
+        try {
+            response.issues.forEach(issue => {
+                processIssue.call(this, issue);
             });
+        } catch (e) {
+            throw new Error("Invalid response");
+        }
+    };
 
-            if (issueCycleTime > 0) {
-                cycleTimes.push(issueCycleTime);
-            }
-            if (issueLeadTime > 0) {
-                leadTimes.push(issueLeadTime);
-            }
+    function processIssue(issue) {
+        let issueLeadTime = 0;
+        let issueCycleTime = 0;
+        let prevTransitionDate = parseDate(issue.fields.created);
+        let cycleStartDate = null;
+
+        issue.changelog.histories.forEach(history => {
+            history.items
+                .filter(transition => isStatusTransition(transition))
+                .forEach(transition => {
+                    const transitionDate = parseDate(history.created);
+
+                    // Update Cycle Time
+                    if (isStatusWIP(transition.to) && isNotSet(cycleStartDate)) {
+                        cycleStartDate = transitionDate;
+                    } else if (!isStatusWIP(transition.to) && cycleStartDate) {
+                        let duration = DateUtils.calculateDurationBetween(cycleStartDate, transitionDate);
+                        issueCycleTime += duration.duration.millis;
+                        cycleStartDate = null;
+                    }
+
+                    // Update Lead Time
+                    if (!isStatusDone(transition.from) && isStatusDone(transition.to)) {
+                        let duration = DateUtils.calculateDurationBetween(prevTransitionDate, transitionDate);
+                        issueLeadTime += duration.duration.millis;
+                        prevTransitionDate = null;
+                    } else if ((isStatusDone(transition.from) || isStatusNew(transition.to)) && !prevTransitionDate) {
+                        prevTransitionDate = transitionDate;
+                    }
+                });
         });
 
-        let averageCycleTime = calculateAverageFor(cycleTimes);
-        let averageLeadTime = calculateAverageFor(leadTimes);
-
-        console.log('Cycle Time: ', DateUtils.calculateDurationFor(averageCycleTime));
-        console.log('Lead Time: ', DateUtils.calculateDurationFor(averageLeadTime));
-
-        return {
-            "cycle-time": {'average': DateUtils.calculateDurationFor(averageCycleTime)},
-            "lead-time": {'average': DateUtils.calculateDurationFor(averageLeadTime)}
-        };
+        if (issueCycleTime > 0) {
+            this.cycleTimes.push(issueCycleTime);
+        }
+        if (issueLeadTime > 0) {
+            this.leadTimes.push(issueLeadTime);
+        }
     }
+
+    MetricsCalculator.prototype.calculateAverageCycleTime = function () {
+        const averageCycleTime = calculateAverageFor(this.cycleTimes);
+        return DateUtils.calculateDurationFor(averageCycleTime);
+    };
+
+    MetricsCalculator.prototype.calculateAverageLeadTime = function () {
+        const averageLeadTime = calculateAverageFor(this.leadTimes);
+        return DateUtils.calculateDurationFor(averageLeadTime);
+    };
 
     MetricsCalculator.prototype.getIssuesIds = function (response) {
         let ids = [];
@@ -72,16 +78,14 @@ let MetricsCalculator = (function () {
             // Yummy, yummy
         }
         return ids;
-    }
+    };
 
     function calculateAverageFor(arrayOfNumbers) {
-        return arrayOfNumbers.reduceRight((prev, curr, index, arr) => {
-            if (index === 0) {
-                let total = prev + curr;
-                return Math.floor(total / arr.length);
-            }
-            return prev + curr;
-        }, 0);
+        const sum = arrayOfNumbers.reduce(
+            (prev, curr) => {
+                return prev + curr;
+            }, 0);
+        return sum ? Math.floor(sum / arrayOfNumbers.length) : 0;
     }
 
     function isNotSet(cycleStartDate) {
@@ -101,8 +105,8 @@ let MetricsCalculator = (function () {
         const newStatuses = {
             '1': 'New',
             'New': '1'
-        }
-        return newStatuses.hasOwnProperty(statusId)
+        };
+        return newStatuses.hasOwnProperty(statusId);
     }
 
     function isStatusDone(statusId) {
@@ -114,8 +118,8 @@ let MetricsCalculator = (function () {
             '6': 'Closed',
             'Closed': '6'
 
-        }
-        return newStatuses.hasOwnProperty(statusId)
+        };
+        return newStatuses.hasOwnProperty(statusId);
     }
 
     function isStatusWIP(statusId) {
