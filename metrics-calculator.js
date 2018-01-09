@@ -41,18 +41,6 @@ let MetricsCalculator = (function () {
         return DateUtils.calculateDurationFor(averageLeadTime);
     };
 
-    MetricsCalculator.prototype.getIssuesIds = function (response) {
-        let ids = [];
-        try {
-            response.issues.forEach(function (i) {
-                ids.push(i.key);
-            });
-        } catch (e) {
-            // Yummy, yummy
-        }
-        return ids;
-    };
-
     function calculateAverageFor(arrayOfNumbers) {
         const sum = arrayOfNumbers.reduce(
             (prev, curr) => {

@@ -17,32 +17,6 @@ describe('MetricsCalculator', function () {
         metricsCalculator = new MetricsCalculator(fixedStatusResolver);
     });
 
-    describe('#getIssuesIds()', () => {
-
-        it('should return an empty array for null request', () => {
-            let ids = new MetricsCalculator().getIssuesIds(null);
-            expect(ids).to.be.array().that.is.ofSize(0);
-        });
-
-        it('should return an empty array for an empty request', () => {
-            let ids = new MetricsCalculator().getIssuesIds('');
-            expect(ids).to.be.array().that.is.ofSize(0);
-        });
-
-        it('should return an empty array for an invalid request', () => {
-            let ids = new MetricsCalculator().getIssuesIds('invalid request');
-            expect(ids).to.be.array().that.is.ofSize(0);
-        });
-
-        it('should return an array of issues ids', () => {
-            let response = require('./test-data/sample-3-issues.json');
-            let ids = new MetricsCalculator().getIssuesIds(response);
-            expect(ids).to.be.array();
-            expect(ids).to.be.ofSize(3);
-            expect(ids).to.be.containingAllOf(['ISSUE-23389', 'ISSUE-24177', 'ISSUE-24510']);
-        });
-    });
-
     describe('#processResponse()', () => {
 
         const EMPTY_RESPONSE = "";
