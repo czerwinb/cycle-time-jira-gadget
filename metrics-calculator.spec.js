@@ -14,7 +14,7 @@ describe('MetricsCalculator', function () {
     let metricsCalculator;
 
     beforeEach(() => {
-        metricsCalculator = new MetricsCalculator();
+        metricsCalculator = new MetricsCalculator(fixedStatusResolver);
     });
 
     describe('#getIssuesIds()', () => {
@@ -226,3 +226,28 @@ describe('MetricsCalculator', function () {
         });
     });
 });
+
+let fixedStatusResolver = {
+    isStatusNew: function (statusId) {
+        const statusesConsideredNew = {
+            '1': 'New',
+            'New': '1'
+        };
+        return statusesConsideredNew.hasOwnProperty(statusId);
+    },
+
+    isStatusDone: function (statusId) {
+        const statusesConsideredDone = {
+            '5': 'Resolved',
+            'Resolved': '5',
+            '6': 'Closed',
+            'Closed': '6'
+
+        };
+        return statusesConsideredDone.hasOwnProperty(statusId);
+    },
+
+    isStatusWIP: function (statusId) {
+        return !(this.isStatusNew(statusId) || this.isStatusDone(statusId));
+    }
+};
