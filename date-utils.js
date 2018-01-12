@@ -7,14 +7,14 @@
  * @param {Date} dateB
  * @returns {Number} a number representing time difference in milliseconds.
  */
-function calculateMillisBetween(dateA, dateB) {
+let calculateMillisBetween = function (dateA, dateB) {
     _validateArguments(dateA, dateB);
 
-    var msA = dateA.getTime();
-    var msB = dateB.getTime();
+    let msA = dateA.getTime();
+    let msB = dateB.getTime();
 
     return Math.abs(msB - msA);
-}
+};
 
 /**
  * Calculate duration between passed dates.
@@ -23,12 +23,12 @@ function calculateMillisBetween(dateA, dateB) {
  * @param {Date} dateB
  * @returns {object} an object representing duration.
  */
-function calculateDurationBetween(dateA, dateB) {
+let calculateDurationBetween = function (dateA, dateB) {
     _validateArguments(dateA, dateB);
-    var millisBetween = calculateMillisBetween(dateA, dateB);
+    let millisBetween = calculateMillisBetween(dateA, dateB);
 
     return calculateDurationFor(millisBetween);
-}
+};
 
 /**
  * Calculates duration for passed time in milliseconds.
@@ -36,13 +36,13 @@ function calculateDurationBetween(dateA, dateB) {
  * @param {Number} timeInMillis
  * @returns {object} an object representing duration.
  */
-function calculateDurationFor(timeInMillis) {
-    var secondsBetween = Math.floor(Math.abs(timeInMillis / 1000));
-    var seconds = Math.floor(secondsBetween % 60);
-    var minutes = Math.floor(secondsBetween / 60 % 60);
-    var hours = Math.floor(secondsBetween / 3600 % 24);
-    var days = Math.floor(secondsBetween / 86400 % 7);
-    var weeks = Math.floor(secondsBetween / 604800);
+let calculateDurationFor = function (timeInMillis) {
+    let secondsBetween = Math.floor(Math.abs(timeInMillis / 1000));
+    let seconds = Math.floor(secondsBetween % 60);
+    let minutes = Math.floor(secondsBetween / 60 % 60);
+    let hours = Math.floor(secondsBetween / 3600 % 24);
+    let days = Math.floor(secondsBetween / 86400 % 7);
+    let weeks = Math.floor(secondsBetween / 604800);
 
     return {
         "weeks": weeks,
@@ -55,7 +55,7 @@ function calculateDurationFor(timeInMillis) {
             "seconds": secondsBetween
         }
     };
-}
+};
 
 function _validateArguments(dateA, dateB) {
     if (!(dateA instanceof Date) || !(dateB instanceof Date)) {
@@ -64,8 +64,12 @@ function _validateArguments(dateA, dateB) {
 }
 
 
-if (typeof exports !== 'undefined') {
-    exports.calculateMillisBetween = calculateMillisBetween;
-    exports.calculateDurationBetween = calculateDurationBetween;
-    exports.calculateDurationFor = calculateDurationFor;
+let DateUtils = {
+    calculateMillisBetween: calculateMillisBetween,
+    calculateDurationBetween: calculateDurationBetween,
+    calculateDurationFor: calculateDurationFor
+};
+
+if (typeof module !== "undefined" && typeof module.exports === "object") {
+    module.exports = DateUtils;
 }
