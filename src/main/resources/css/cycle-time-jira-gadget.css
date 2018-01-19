@@ -1,0 +1,21 @@
+#cycle-time-gadget {
+    display: table-cell;
+    vertical-align: middle;
+    width: 450px;
+    background: #f0f0f0;
+}
+
+.time-box {
+    width: 200px;
+    margin: 10px auto;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid rgb(23, 139, 202);
+    border-radius: 6px;
+}
+
+.time-box p {
+    margin: 16px 0;
+    font: 2em "Arial Narrow";
+    color: rgb(23, 139, 202);
+}

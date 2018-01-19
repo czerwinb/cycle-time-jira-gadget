@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="__MSG_cycle-time-jira-gadget.name__"
+                 directory_title="__MSG_cycle-time-jira-gadget.name__"
+                 author="Bartosz Czerwiński"
+                 author_email="ask@etmaze.com"
+                 description="__MSG_cycle-time-jira-gadget.directory-description__">
+
+        <Optional feature="gadget-directory">
+            <Param name="categories">JIRA</Param>
+        </Optional>
+        <!--<Optional feature="auth-refresh"/>-->
+
+        <!--<Require feature="oauthpopup"/>-->
+        <Require feature="setprefs"/>
+        <Require feature="settitle"/>
+        <Require feature="minimessage"/>
+        <Require feature="dynamic-height"/>
+
+        #supportedLocales("cycle-time-jira-gadget")
+        <!--#oauth()-->
+    </ModulePrefs>
+
+    <UserPref name="isConfigured" datatype="hidden" default_value="false"/>
+    <UserPref name="displayCycleTime" display_name="Display Cycle Time" datatype="bool" default_value="true"/>
+    <UserPref name="displayLeadTime" display_name="Display Lead Time" datatype="bool" default_value="true"/>
+
+    <Content type="html" view="profile">
+        <![CDATA[
+        #requireResource("com.etmaze.cycle-time-jira-gadget:cycle-time-jira-gadget-resources")
+        #includeResources()
+        <!--("com.atlassian.jira.issues-gadget:resources")-->
+
+        <div id="cycle-time-gadget">
+            <div class="time-box">
+                <p id="cycle-time">Loading...</p>
+            </div>
+            <div class="time-box">
+                <p id="lead-time">Loading...</p>
+            </div>
+        </div>
+
+        <script src="https://cb9f3570.ngrok.io/date-utils.js" type="text/javascript"></script>
+
+        <script src="https://cb9f3570.ngrok.io/metrics-calculator.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            function initGadget() {
+                gadgets.window.adjustHeight();
+
+                var params = {};
+                var url = "__ATLASSIAN_BASE_URL__/rest/api/2/search?jql=key=DEMO-2&expand=changelog";
+
+                params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+                params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
+
+                gadgets.io.makeRequest(url, handleResponse, params);
+            }
+
+            function handleResponse(response) {
+                let metricsCalculator = new MetricsCalculator(fixedStatusResolver);
+                try {
+                    metricsCalculator.processResponse(response.data);
+                    let cycleTime = metricsCalculator.calculateAverageCycleTime();
+                    let cycleTimeElement = document.getElementById('cycle-time');
+                    cycleTimeElement.innerHTML = cycleTime.toString();
+                    let leadTime = metricsCalculator.calculateAverageLeadTime();
+                    let leadTimeElement = document.getElementById('lead-time');
+                    leadTimeElement.innerHTML = leadTime.toString();
+                } catch (e) {
+                    var message = new gadgets.MiniMessage(__MODULE_ID__);
+                    message.createDismissibleMessage("An error occurred while loading gadget.");
+                }
+            }
+
+            let fixedStatusResolver = {
+                isStatusNew: function (statusId) {
+                    const statusesConsideredNew = {
+                        '1': 'New',
+                        'New': '1'
+                    };
+                    return statusesConsideredNew.hasOwnProperty(statusId);
+                },
+
+                isStatusDone: function (statusId) {
+                    const statusesConsideredDone = {
+                        '5': 'Resolved',
+                        'Resolved': '5',
+                        '6': 'Closed',
+                        'Closed': '6'
+
+                    };
+                    return statusesConsideredDone.hasOwnProperty(statusId);
+                },
+
+                isStatusWIP: function (statusId) {
+                    return !(this.isStatusNew(statusId) || this.isStatusDone(statusId));
+                }
+            };
+
+            gadgets.util.registerOnLoadHandler(initGadget);
+        </script>
+        ]]>
+    </Content>
+</Module>

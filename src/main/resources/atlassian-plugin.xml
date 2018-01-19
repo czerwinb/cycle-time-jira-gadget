@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+        <param name="plugin-icon">images/pluginLogo.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+
+    <resource type="i18n" name="i18n" location="i18n/cycle-time-jira-gadget"/>
+
+    <web-resource key="cycle-time-jira-gadget-resources" i18n-name-key="cycle-time-jira-gadget-resources.name">
+        <resource type="download" name="cycle-time-jira-gadget.css" location="/css/cycle-time-jira-gadget.css"/>
+        <resource type="download" name="cycle-time-jira-gadget.js" location="/js/cycle-time-jira-gadget.js"/>
+        <resource type="download" name="images/" location="/images"/>
+        <context>atl.dashboard</context>
+        <condition class="com.atlassian.plugin.web.conditions.AlwaysDisplayCondition"/>
+    </web-resource>
+
+    <gadget key="cycle-time-jira-gadget" i18n-name-key="cycle-time-jira-gadget.name"
+            location="gadgets/cycle-time-jira-gadget/gadget.xml">
+        <description key="cycle-time-jira-gadget.description"/>
+    </gadget>
+</atlassian-plugin>
