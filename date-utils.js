@@ -53,6 +53,12 @@ let calculateDurationFor = function (timeInMillis) {
         "duration": {
             "millis": timeInMillis,
             "seconds": secondsBetween
+        },
+        toString: function () {
+            return weeks + "w " +
+                days + "d " +
+                hours + "h " +
+                minutes + "m";
         }
     };
 };
