@@ -3,5 +3,8 @@
 .eslintrc.yaml
 .nyc_output/
 node_modules/
+target/
 
 *.iml
+*.log
+*.swp
