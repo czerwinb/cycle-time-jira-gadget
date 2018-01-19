@@ -11,7 +11,7 @@ describe('DateUtils', () => {
     const DATE_B = new Date('2017-11-09T09:58:30.966+0000');
     const MILLIS_BETWEEN_AB = 1953563966;
 
-    const DateUtils = require('./date-utils')
+    const DateUtils = require('../../main/javascript/date-utils')
 
     describe('#calculateMillisBetween()', () => {
         it('should throw an exception if any of passed arguments is not of type Date', () => {

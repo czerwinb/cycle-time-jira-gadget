@@ -10,7 +10,7 @@ const expect = chai.expect;
 
 describe('MetricsCalculator', function () {
 
-    const MetricsCalculator = require('./metrics-calculator');
+    const MetricsCalculator = require('../../main/javascript/metrics-calculator');
     let metricsCalculator;
 
     beforeEach(() => {
@@ -35,7 +35,7 @@ describe('MetricsCalculator', function () {
         });
 
         it('should calculate Cycle Time and Lead Time for ISSUE-123', () => {
-            let response = require('./test-data/sample-ISSUE-123.json');
+            let response = require('../resources/jira-api-responses/sample-ISSUE-123.json');
 
             metricsCalculator.processResponse(response);
             let averageCycleTime = metricsCalculator.calculateAverageCycleTime();
@@ -62,7 +62,7 @@ describe('MetricsCalculator', function () {
         });
 
         it('should calculate Cycle Time and Lead Time for ISSUE-24510', () => {
-            let response = require('./test-data/sample-ISSUE-24510.json');
+            let response = require('../resources/jira-api-responses/sample-ISSUE-24510.json');
 
             metricsCalculator.processResponse(response);
             let averageCycleTime = metricsCalculator.calculateAverageCycleTime();
@@ -89,7 +89,7 @@ describe('MetricsCalculator', function () {
         });
 
         it('should calculate Cycle Time and Lead Time for ISSUE-24177', () => {
-            let response = require('./test-data/sample-ISSUE-24177.json');
+            let response = require('../resources/jira-api-responses/sample-ISSUE-24177.json');
 
             metricsCalculator.processResponse(response);
             let averageCycleTime = metricsCalculator.calculateAverageCycleTime();
@@ -116,7 +116,7 @@ describe('MetricsCalculator', function () {
         });
 
         it('should calculate Cycle Time and Lead Time for ISSUE-23389', () => {
-            let response = require('./test-data/sample-ISSUE-23389.json');
+            let response = require('../resources/jira-api-responses/sample-ISSUE-23389.json');
 
             metricsCalculator.processResponse(response);
             let averageCycleTime = metricsCalculator.calculateAverageCycleTime();
@@ -144,7 +144,7 @@ describe('MetricsCalculator', function () {
         });
 
         it('should calculate Cycle Time and Lead Time for 2 issues', () => {
-            let response = require('./test-data/sample-2-issues.json');
+            let response = require('../resources/jira-api-responses/sample-2-issues.json');
 
             metricsCalculator.processResponse(response);
             let averageCycleTime = metricsCalculator.calculateAverageCycleTime();
@@ -172,7 +172,7 @@ describe('MetricsCalculator', function () {
         });
 
         it('should calculate Cycle Time and Lead Time for 3 issues', () => {
-            let response = require('./test-data/sample-3-issues.json');
+            let response = require('../resources/jira-api-responses/sample-3-issues.json');
 
             metricsCalculator.processResponse(response);
             let averageCycleTime = metricsCalculator.calculateAverageCycleTime();
