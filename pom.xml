@@ -10,9 +10,7 @@
     <packaging>atlassian-plugin</packaging>
 
     <name>Cycle Time JIRA Gadget</name>
-    <description>JIRA dashboard gadget to calculate and display a Cycle Time and a Lead Time for a specified subset of
-        issues.
-    </description>
+    <description>JIRA dashboard gadget to calculate and display a Cycle Time and a Lead Time for a specified subset of issues.</description>
 
     <organization>
         <name>etmaze</name>
@@ -95,16 +93,29 @@
     <build>
         <resources>
             <resource>
-                <directory>src/main/javascript</directory>
+                <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
+            <resource>
+                <directory>src/main/javascript</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>**.js</exclude>
+                </excludes>
+            </resource>
         </resources>
+
         <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
             <testResource>
                 <directory>src/test/javascript</directory>
                 <filtering>true</filtering>
             </testResource>
         </testResources>
+
         <plugins>
             <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
@@ -126,6 +137,7 @@
                     -->
                     <enableQuickReload>true</enableQuickReload>
                     <enableFastdev>false</enableFastdev>
+                    <compressJs>false</compressJs>
                     <!-- See here for an explanation of default instructions: -->
                     <!-- https://developer.atlassian.com/docs/advanced-topics/configuration-of-instructions-in-atlassian-plugins -->
                     <instructions>
@@ -159,6 +171,23 @@
                     </scannedDependencies>
                     <verbose>false</verbose>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <id>run gulp build</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>gulp</executable>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
