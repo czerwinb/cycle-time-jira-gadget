@@ -10,7 +10,7 @@
     <packaging>atlassian-plugin</packaging>
 
     <name>Cycle Time JIRA Gadget</name>
-    <description>JIRA dashboard gadget to calculate and display a Cycle Time and a Lead Time for a specified subset of issues.</description>
+    <description>JIRA dashboard gadget to calculate and display a Cycle Time and a Lead Time for a saved filter.</description>
 
     <organization>
         <name>etmaze</name>
