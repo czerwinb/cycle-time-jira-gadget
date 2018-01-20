@@ -100,7 +100,7 @@
                 <directory>src/main/javascript</directory>
                 <filtering>true</filtering>
                 <excludes>
-                    <exclude>**.js</exclude>
+                    <exclude>**</exclude>
                 </excludes>
             </resource>
         </resources>
@@ -113,6 +113,9 @@
             <testResource>
                 <directory>src/test/javascript</directory>
                 <filtering>true</filtering>
+                <excludes>
+                    <exclude>**</exclude>
+                </excludes>
             </testResource>
         </testResources>
 
