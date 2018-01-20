@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module>
-    <ModulePrefs title="__MSG_cycle-time-jira-gadget.name__"
+    <ModulePrefs title="__MSG_cycle-time-jira-gadget.directory-title__"
                  directory_title="__MSG_cycle-time-jira-gadget.name__"
                  author="Bartosz Czerwiński"
                  author_email="ask@etmaze.com"
@@ -9,16 +9,13 @@
         <Optional feature="gadget-directory">
             <Param name="categories">JIRA</Param>
         </Optional>
-        <!--<Optional feature="auth-refresh"/>-->
 
-        <!--<Require feature="oauthpopup"/>-->
         <Require feature="setprefs"/>
         <Require feature="settitle"/>
         <Require feature="minimessage"/>
         <Require feature="dynamic-height"/>
 
         #supportedLocales("cycle-time-jira-gadget")
-        <!--#oauth()-->
     </ModulePrefs>
 
     <UserPref name="isConfigured" datatype="hidden" default_value="false"/>
@@ -29,7 +26,6 @@
         <![CDATA[
         #requireResource("com.etmaze.cycle-time-jira-gadget:cycle-time-jira-gadget-resources")
         #includeResources()
-        <!--("com.atlassian.jira.issues-gadget:resources")-->
 
         <div id="cycle-time-gadget">
             <div class="time-box">
