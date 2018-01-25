@@ -13,6 +13,8 @@
 
     <web-resource key="cycle-time-jira-gadget-resources" i18n-name-key="cycle-time-jira-gadget-resources.name">
         <resource type="download" name="cycle-time-jira-gadget.css" location="/css/cycle-time-jira-gadget.css"/>
+        <resource type="download" name="jira-status-resolver.bundle.js" location="/js/jira-status-resolver.bundle.js"/>
+        <resource type="download" name="metrics-calculator.bundle.js" location="/js/metrics-calculator.bundle.js"/>
         <resource type="download" name="cycle-time-jira-gadget.js" location="/js/cycle-time-jira-gadget.js"/>
         <resource type="download" name="images/" location="/images"/>
         <context>atl.dashboard</context>
