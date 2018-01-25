@@ -11,90 +11,140 @@
         </Optional>
 
         <Require feature="setprefs"/>
+        <Require feature="views"/>
+        <Require feature="oauthpopup"/>
         <Require feature="settitle"/>
         <Require feature="minimessage"/>
         <Require feature="dynamic-height"/>
 
+        #supportedLocales("gadget.common")
         #supportedLocales("cycle-time-jira-gadget")
+        #supportLocales()
+        #oauth()
     </ModulePrefs>
 
     <UserPref name="isConfigured" datatype="hidden" default_value="false"/>
-    <UserPref name="displayCycleTime" display_name="Display Cycle Time" datatype="bool" default_value="true"/>
-    <UserPref name="displayLeadTime" display_name="Display Lead Time" datatype="bool" default_value="true"/>
+    <UserPref name="projectOrFilterId" datatype="hidden"/>
+    <UserPref name="displayCycleTime" datatype="hidden" default_value="true"/>
+    <UserPref name="displayLeadTime" datatype="hidden" default_value="true"/>
 
     <Content type="html" view="profile">
         <![CDATA[
+        #requireResource("com.atlassian.gadgets.publisher:ajs-gadgets")
+        #requireResource("com.atlassian.jira.gadgets:common")
         #requireResource("com.etmaze.cycle-time-jira-gadget:cycle-time-jira-gadget-resources")
         #includeResources()
 
-        <div id="cycle-time-gadget">
-            <div class="time-box">
-                <p id="cycle-time">Loading...</p>
-            </div>
-            <div class="time-box">
-                <p id="lead-time">Loading...</p>
-            </div>
-        </div>
-
-        <script src="https://cb9f3570.ngrok.io/date-utils.js" type="text/javascript"></script>
-
-        <script src="https://cb9f3570.ngrok.io/metrics-calculator.js" type="text/javascript"></script>
-
         <script type="text/javascript">
-            function initGadget() {
-                gadgets.window.adjustHeight();
+            (function() {
+                var gadget = AJS.Gadget({
+                    baseUrl: "__ATLASSIAN_BASE_URL__",
+                    useOauth: "/rest/gadget/1.0/currentUser",
+                    config: {
+                        descriptor: function(args) {
+                            gadgets.window.setTitle("__MSG_cycle-time-jira-gadget.directory-title__");
+                            var gadget = this;
+                            return {
+                                theme: "long-label",
+                                fields: [
+                                    AJS.gadget.fields.nowConfigured(),
+                                    AJS.gadget.fields.projectOrFilterPicker(gadget, "projectOrFilterId", args.filtersAndProjects),
+                                    {
+                                        type: "select",
+                                        label: gadget.getMsg("cycle-time-jira-gadget.pref.displayCycleTime.label"),
+                                        userpref: "displayCycleTime",
+                                        selected: gadget.getPref("displayCycleTime"),
+                                        options: [
+                                            { label:gadget.getMsg("gadget.common.yes"), value:"true" },
+                                            { label:gadget.getMsg("gadget.common.no"), value:"false" }
+                                        ]
+                                    },
+                                    {
+                                        type: "select",
+                                        label: gadget.getMsg("cycle-time-jira-gadget.pref.displayLeadTime.label"),
+                                        userpref: "displayLeadTime",
+                                        selected: gadget.getPref("displayLeadTime"),
+                                        options: [
+                                            { label:gadget.getMsg("gadget.common.yes"), value:"true" },
+                                            { label:gadget.getMsg("gadget.common.no"), value:"false" }
+                                        ]
+                                    }
+                                ]
+                            };
+                        },
+                        args: [
+                            {
+                                key: "filtersAndProjects",
+                                ajaxOptions: "/rest/gadget/1.0/filtersAndProjects"
+                            }
+                        ]
+                    },
+                    view: {
+                        onResizeAdjustHeight: true,
+                        enableReload: true,
+                        template: function (args) {
+                            var gadget = this;
+                            var searchResponse = args.searchResponse;
 
-                var params = {};
-                var url = "__ATLASSIAN_BASE_URL__/rest/api/2/search?jql=key=DEMO-2&expand=changelog";
+                            var createGadgetContainer = function() {
+                                return AJS.$("<div/>").attr('id', 'cycle-time-gadget').appendTo(gadget.getView().empty());
+                            };
 
-                params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
-                params[gadgets.io.RequestParameters.METHOD] = gadgets.io.MethodType.GET;
+                            var setupCycleTimeDisplayIn = function(container) {
+                                if (gadget.getPref("displayCycleTime") === 'true') {
+                                    container.append('<div class="time-box"><p id="cycle-time">Loading...</p></div>');
+                                }
+                            };
 
-                gadgets.io.makeRequest(url, handleResponse, params);
-            }
+                            var displayCycleTime = function(cycleTime) {
+                                AJS.$('#cycle-time').text(cycleTime);
+                            }
 
-            function handleResponse(response) {
-                let metricsCalculator = new MetricsCalculator(fixedStatusResolver);
-                try {
-                    metricsCalculator.processResponse(response.data);
-                    let cycleTime = metricsCalculator.calculateAverageCycleTime();
-                    let cycleTimeElement = document.getElementById('cycle-time');
-                    cycleTimeElement.innerHTML = cycleTime.toString();
-                    let leadTime = metricsCalculator.calculateAverageLeadTime();
-                    let leadTimeElement = document.getElementById('lead-time');
-                    leadTimeElement.innerHTML = leadTime.toString();
-                } catch (e) {
-                    var message = new gadgets.MiniMessage(__MODULE_ID__);
-                    message.createDismissibleMessage("An error occurred while loading gadget.");
-                }
-            }
+                            var displayLeadTime = function(leadTime) {
+                                AJS.$('#lead-time').text(leadTime);
+                            }
 
-            let fixedStatusResolver = {
-                isStatusNew: function (statusId) {
-                    const statusesConsideredNew = {
-                        '1': 'New',
-                        'New': '1'
-                    };
-                    return statusesConsideredNew.hasOwnProperty(statusId);
-                },
+                            var setupLeadTimeDisplayIn = function(container) {
+                                if (gadget.getPref("displayLeadTime") === 'true') {
+                                    container.append('<div class="time-box"><p id="lead-time">Loading...</p></div>');
+                                }
+                            };
 
-                isStatusDone: function (statusId) {
-                    const statusesConsideredDone = {
-                        '5': 'Resolved',
-                        'Resolved': '5',
-                        '6': 'Closed',
-                        'Closed': '6'
+                            var main = function() {
+                                var container = createGadgetContainer();
+                                setupCycleTimeDisplayIn(container);
+                                setupLeadTimeDisplayIn(container);
 
-                    };
-                    return statusesConsideredDone.hasOwnProperty(statusId);
-                },
+                                var metrics = calculateMetricsFor(args.jiraStatuses, args.searchResponse);
+                                displayCycleTime(metrics.cycleTime.average);
+                                displayLeadTime(metrics.leadTime.average);
+                            }
 
-                isStatusWIP: function (statusId) {
-                    return !(this.isStatusNew(statusId) || this.isStatusDone(statusId));
-                }
-            };
-
-            gadgets.util.registerOnLoadHandler(initGadget);
+                            main();
+                        },
+                        args: [
+                            {
+                                key: "jiraStatuses",
+                                ajaxOptions: "/rest/api/2/status"
+                            },
+                            {
+                                key: "searchResponse",
+                                ajaxOptions: function() {
+                                    var projectOrFilterId = this.getPref("projectOrFilterId");
+                                    return {
+                                        url: "/rest/api/2/search",
+                                        data: {
+                                            jql: gadgets.util.unescapeString(projectOrFilterId.replace('-', '=')),
+                                            expand: "changelog",
+                                            maxResults: 1000
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                });
+            }());
         </script>
         ]]>
     </Content>
