@@ -17,8 +17,7 @@
         <Require feature="minimessage"/>
         <Require feature="dynamic-height"/>
 
-        #supportedLocales("gadget.common")
-        #supportedLocales("cycle-time-jira-gadget")
+        #supportedLocales("gadget.common,cycle-time-jira-gadget")
         #supportLocales()
         #oauth()
     </ModulePrefs>

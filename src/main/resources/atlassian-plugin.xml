@@ -12,6 +12,10 @@
     <resource type="i18n" name="i18n" location="i18n/cycle-time-jira-gadget"/>
 
     <web-resource key="cycle-time-jira-gadget-resources" i18n-name-key="cycle-time-jira-gadget-resources.name">
+        <transformation extension="js">
+            <transformer key="jsI18n" />
+        </transformation>
+
         <resource type="download" name="cycle-time-jira-gadget.css" location="/css/cycle-time-jira-gadget.css"/>
         <resource type="download" name="jira-status-resolver.bundle.js" location="/js/jira-status-resolver.bundle.js"/>
         <resource type="download" name="metrics-calculator.bundle.js" location="/js/metrics-calculator.bundle.js"/>
