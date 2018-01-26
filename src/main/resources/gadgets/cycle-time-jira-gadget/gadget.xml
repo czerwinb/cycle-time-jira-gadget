@@ -41,7 +41,6 @@
                     useOauth: "/rest/gadget/1.0/currentUser",
                     config: {
                         descriptor: function(args) {
-                            gadgets.window.setTitle("__MSG_cycle-time-jira-gadget.directory-title__");
                             var gadget = this;
                             return {
                                 theme: "long-label",
@@ -83,7 +82,8 @@
                         enableReload: true,
                         template: function (args) {
                             var gadget = this;
-                            var searchResponse = args.searchResponse;
+
+                            gadgets.window.setTitle("__MSG_cycle-time-jira-gadget.directory-title__: " + gadget.getPref("projectOrFilterId"));
 
                             var createGadgetContainer = function() {
                                 return AJS.$("<div/>").attr('id', 'cycle-time-gadget').appendTo(gadget.getView().empty());
@@ -91,7 +91,7 @@
 
                             var setupCycleTimeDisplayIn = function(container) {
                                 if (gadget.getPref("displayCycleTime") === 'true') {
-                                    container.append('<div class="time-box"><p id="cycle-time">Loading...</p></div>');
+                                    container.append('<div class="time-box"><p id="cycle-time">Loading...</p><span class="label">Cycle Time</span></div>');
                                 }
                             };
 
@@ -105,7 +105,7 @@
 
                             var setupLeadTimeDisplayIn = function(container) {
                                 if (gadget.getPref("displayLeadTime") === 'true') {
-                                    container.append('<div class="time-box"><p id="lead-time">Loading...</p></div>');
+                                    container.append('<div class="time-box"><p id="lead-time">Loading...</p><span class="label">Lead Time</span></div>');
                                 }
                             };
 

@@ -1,8 +1,4 @@
 #cycle-time-gadget {
-    display: table-cell;
-    vertical-align: middle;
-    width: 450px;
-    background: #f0f0f0;
 }
 
 .time-box {
@@ -15,7 +11,20 @@
 }
 
 .time-box p {
-    margin: 16px 0;
-    font: 2em "Arial Narrow";
+    margin: 20px 0 8px 0;
+    font: 24px "Arial Narrow";
     color: rgb(23, 139, 202);
+}
+
+.letters {
+    font: 20px "Arial";
+    color: rgb(23, 139, 202);
+}
+
+.label {
+    display: block;
+    margin: 0 2px 0 0;
+    text-align: right;
+    font: 12px "Arial";
+    color: lightgray;
 }
